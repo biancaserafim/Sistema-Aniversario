@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aniversários 🎂</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===== CABEÇALHO ===== -->
+  <header class="header">
+    <div class="header-content">
+      <div class="header-title">
+        <span class="header-icon">🌸</span>
+        <div>
+          <h1>Aniversários</h1>
+          <p class="header-subtitle">Nunca esqueça </p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- Botão principal de adicionar -->
+        <button class="btn-add" id="btn-open-form">+ Adicionar</button>
+        <button class="btn-icon" id="btn-export">↑ Exportar</button>
+        <button class="btn-icon" id="btn-import">↓ Importar</button>
+        <input type="file" id="import-file" accept=".json" style="display:none" />
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== GRID PRINCIPAL ===== -->
+  <main class="main-grid">
+
+    <!-- ESQUERDA: calendário grande + lista -->
+    <section class="left-column">
+
+      <!-- CALENDÁRIO GRANDE -->
+      <div class="card calendar-main">
+        <div class="cal-top-bar">
+          <button id="prev-month" class="cal-nav-btn">‹</button>
+          <div class="cal-title-group">
+            <h2 class="calendar-month-title" id="calendar-title"></h2>
+            <button class="btn-today" id="btn-today">Hoje</button>
+          </div>
+          <button id="next-month" class="cal-nav-btn">›</button>
+        </div>
+
+        <div class="calendar-weekdays">
+          <span>Dom</span><span>Seg</span><span>Ter</span>
+          <span>Qua</span><span>Qui</span><span>Sex</span><span>Sáb</span>
+        </div>
+
+        <div class="calendar-grid" id="calendar-grid"></div>
+
+        <!-- Legenda -->
+        <div class="cal-legend">
+          <span class="legend-dot dot-today"></span><span>Hoje</span>
+          <span class="legend-dot dot-birthday"></span><span>Aniversário</span>
+          <span class="legend-dot dot-both"></span><span>Aniversário hoje</span>
+        </div>
+      </div>
+
+      <!-- LISTA DE ANIVERSÁRIOS -->
+      <div class="list-area">
+        <div class="list-top">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="search-input" placeholder="Buscar por nome..." autocomplete="off" />
+          </div>
+          <span class="list-label">Todos <span class="count-badge" id="total-count">0</span></span>
+        </div>
+
+        <div id="birthday-list"></div>
+        <div id="empty-state" class="empty-state" style="display:none">
+          <div class="empty-icon">🌷</div>
+          <p>Nenhum aniversário cadastrado ainda.</p>
+          <p>Clique em <strong>+ Adicionar</strong> para começar!</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- DIREITA: próximos aniversários -->
+    <section class="right-column">
+      <div class="card upcoming-card">
+        <h2 class="card-title">🎂 Próximos aniversários</h2>
+        <div id="upcoming-list"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== PAINEL LATERAL (formulário deslizante) ===== -->
+  <div class="panel-overlay" id="panel-overlay"></div>
+
+  <aside class="side-panel" id="side-panel">
+    <div class="panel-header">
+      <h2 class="panel-title" id="panel-title">Novo aniversário</h2>
+      <button class="panel-close" id="panel-close">×</button>
+    </div>
+
+    <form id="birthday-form" novalidate>
+      <div class="field-group">
+        <label for="input-name">Nome</label>
+        <input type="text" id="input-name" placeholder="Ex: Maria Silva" required />
+      </div>
+      <div class="field-group">
+        <label for="input-date">Data de nascimento</label>
+        <input type="date" id="input-date" required />
+      </div>
+      <div class="field-group">
+        <label for="input-category">Categoria</label>
+        <select id="input-category">
+          <option value="familia">🏡 Família</option>
+          <option value="amigo">💛 Amigo(a)</option>
+        </select>
+      </div>
+      <div class="field-group">
+        <label for="input-note">Observação <span class="optional">(opcional)</span></label>
+        <textarea id="input-note" placeholder="Ex: prefere mensagem por WhatsApp..." rows="3"></textarea>
+      </div>
+      <div class="form-buttons">
+        <button type="submit" class="btn-primary" id="btn-save">Salvar</button>
+        <button type="button" class="btn-ghost" id="btn-cancel">Cancelar</button>
+      </div>
+    </form>
+  </aside>
+
+  <!-- Popup de dia com aniversariantes -->
+  <div class="day-popup" id="day-popup" style="display:none">
+    <button class="popup-close" id="popup-close">×</button>
+    <h3 id="popup-date"></h3>
+    <ul id="popup-list"></ul>
+    <button class="popup-add-btn" id="popup-add-btn">+ Adicionar nesta data</button>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
